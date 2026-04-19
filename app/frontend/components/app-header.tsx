@@ -54,7 +54,7 @@ const rightNavItems: NavItem[] = [
   },
   {
     title: "Documentation",
-    href:  "https://github.com/edufcarvalho/handle#readme",
+    href: "https://github.com/edufcarvalho/handle#readme",
     icon: BookOpen,
   },
 ]
