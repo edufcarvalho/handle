@@ -1,9 +1,4 @@
-# frozen_string_literal: true
-
-class HomeController < InertiaController
-  skip_before_action :authenticate
-  before_action :perform_authentication
-
+class HomeController < ApplicationController
   def index
   end
 end
