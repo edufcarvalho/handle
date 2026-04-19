@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   has_secure_password
 
@@ -17,8 +19,8 @@ class User < ApplicationRecord
   belongs_to :parent, class_name: "Workstream", foreign_key: :parent_id, optional: true, dependent: :destroy
 
   validates :name, presence: true
-  validates :email, presence: true, uniqueness: true, format: {with: URI::MailTo::EMAIL_REGEXP}
-  validates :password, allow_nil: true, length: {minimum: 8}
+  validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :password, allow_nil: true, length: { minimum: 8 }
 
   normalizes :email, with: -> { _1.strip.downcase }
 
@@ -28,5 +30,21 @@ class User < ApplicationRecord
 
   after_update if: :password_digest_previously_changed? do
     sessions.where.not(id: Current.session).delete_all
+  end
+
+  def self.from_omniauth(auth)
+    email = auth.info.email.presence&.downcase || "#{auth.uid}@#{auth.provider}.invalid"
+
+    user = User.includes(:providers)
+      .find_or_create_by(email:) do |u|
+        u.name ||= auth.info.name
+        u.password ||= SecureRandom.hex(16)
+        u.verified = true
+        u.avatar_url ||= auth.info.image
+    end
+
+    user.providers.find_or_create_by(name: auth.provider, uid: auth.uid)
+
+    user
   end
 end

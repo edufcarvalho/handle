@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class Identity::PasswordResetsController < ApplicationController
   skip_before_action :authenticate
 
   before_action :set_user, only: %i[ edit update ]
 
   def edit
-    render inertia: {email: @user.email, sid: params[:sid]}
+    render inertia: { email: @user.email, sid: params[:sid] }
   end
 
   def create

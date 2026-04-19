@@ -4,5 +4,5 @@ class Provider < ApplicationRecord
   belongs_to :user, dependent: :destroy
 
   validates :name, presence: true
-  validates :uid, presence: true, uniqueness: {scope: :name}
+  validates :uid, presence: true, uniqueness: { scope: :name }
 end

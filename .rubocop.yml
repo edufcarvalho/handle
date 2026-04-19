@@ -6,7 +6,7 @@ Layout/SpaceInsideArrayLiteralBrackets:
 
 Layout/SpaceInsideHashLiteralBraces:
   Enabled: true
-  EnforcedStyle: no_space
+  EnforcedStyle: space
 
 Layout/IndentationConsistency:
   Enabled: true
