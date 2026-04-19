@@ -28,29 +28,4 @@ class User < ApplicationRecord
   after_update if: :password_digest_previously_changed? do
     sessions.where.not(id: Current.session).delete_all
   end
-
-  enum :layout, {
-    list: "list",
-    board: "board",
-    calendar: "calendar"
-  }, default: "list", validate: true
-
-  enum :color, {
-    jet_black: "jet_black",
-    strong_cyan: "strong_cyan",
-    pearl_aqua: "pearl_aqua",
-    mint_cream: "mint_cream",
-    soft_blush: "soft_blush",
-    powder_blush: "powder_blush",
-    grapefruit_pink: "grapefruit_pink",
-    grapefruit_pink_2: "grapefruit_pink_2",
-    sandy_brown: "sandy_brown",
-    royal_gold: "royal_gold"
-  }, default: "jet_black", validate: true
-
-  enum :visibility, {
-    private: "private",
-    public: "public",
-    restricted: "restricted"
-  }, default: "private", prefix: "", validate: true
 end
