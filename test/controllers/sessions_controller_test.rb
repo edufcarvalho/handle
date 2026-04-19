@@ -18,15 +18,15 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should sign in" do
-    post sign_in_url, params: { email: @user.email, password: "Secret1*3*5*" }
-    assert_redirected_to root_url
+    post sign_in_url, params: {email: @user.email, password: "Secret1*3*5*"}
+    assert_redirected_to dashboard_url
 
-    get root_url
+    get dashboard_url
     assert_response :success
   end
 
   test "should not sign in with wrong credentials" do
-    post sign_in_url, params: { email: @user.email, password: "SecretWrong1*3" }
+    post sign_in_url, params: {email: @user.email, password: "SecretWrong1*3"}
     assert_redirected_to sign_in_url(email_hint: @user.email)
     assert_equal "That email or password is incorrect", flash[:alert]
 
@@ -38,7 +38,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     sign_in_as @user
 
     delete session_url(@user.sessions.last)
-    assert_redirected_to sessions_url
+    assert_redirected_to settings_sessions_url
 
     follow_redirect!
     assert_redirected_to sign_in_url

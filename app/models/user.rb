@@ -11,13 +11,12 @@ class User < ApplicationRecord
 
   has_many :sessions, dependent: :destroy
   has_many :tasks
-  has_many :children, class_name: "Workstream", foreign_key: :workstream_id
-  belongs_to :parent, class_name: "Workstream", foreign_key: :workstream_id, optional: true, dependent: :destroy
-  belongs_to :user, dependent: :destroy
+  has_many :children, class_name: "Workstream", foreign_key: :parent_id
+  belongs_to :parent, class_name: "Workstream", foreign_key: :parent_id, optional: true, dependent: :destroy
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true, format: {with: URI::MailTo::EMAIL_REGEXP}
-  validates :password, allow_nil: true, length: {minimum: 12}
+  validates :password, allow_nil: true, length: {minimum: 8}
 
   normalizes :email, with: -> { _1.strip.downcase }
 

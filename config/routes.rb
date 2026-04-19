@@ -6,12 +6,17 @@ Rails.application.routes.draw do
   get  "sign_up", to: "users#new", as: :sign_up
   post "sign_up", to: "users#create"
 
-  resources :sessions, only: [:destroy]
+  resources :sessions, only: [:index, :destroy]
+
   resource :users, only: [:destroy]
+  resource :password, only: [:edit, :update]
+  resource :email, only: [:edit, :update]
+  resource :registration, only: []
 
   namespace :identity do
     resource :email_verification, only: [:show, :create]
     resource :password_reset,     only: [:new, :edit, :create, :update]
+    resource :email, only: [:edit, :update]
   end
 
   namespace :settings do

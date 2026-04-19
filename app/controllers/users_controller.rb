@@ -42,4 +42,11 @@ class UsersController < InertiaController
   def send_email_verification
     UserMailer.with(user: @user).email_verification.deliver_later
   end
+
+  def require_no_authentication
+    return unless perform_authentication
+
+    flash[:notice] = "You are already signed in"
+    redirect_to root_path
+  end
 end
