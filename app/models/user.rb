@@ -9,8 +9,10 @@ class User < ApplicationRecord
     password_salt.last(10)
   end
 
-  has_many :sessions, dependent: :destroy
+  has_many :sessions
   has_many :tasks
+  has_many :providers
+
   has_many :children, class_name: "Workstream", foreign_key: :parent_id
   belongs_to :parent, class_name: "Workstream", foreign_key: :parent_id, optional: true, dependent: :destroy
 

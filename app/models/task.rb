@@ -2,6 +2,7 @@
 
 class Task < ApplicationRecord
   belongs_to :workstream, optional: true, dependent: :destroy
+  belongs_to :user, dependent: :destroy
 
   validates :title, presence: true
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_19_031613) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_19_042457) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -41,6 +41,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_19_031613) do
     t.string "title", null: false
     t.string "type"
     t.datetime "updated_at", null: false
+    t.uuid "user_id", null: false
     t.uuid "workstream_id"
     t.index ["workstream_id"], name: "index_tasks_on_workstream_id"
   end
@@ -64,11 +65,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_19_031613) do
     t.string "name", null: false
     t.uuid "parent_id"
     t.datetime "updated_at", null: false
+    t.uuid "user_id", null: false
     t.index ["parent_id"], name: "index_workstreams_on_parent_id"
   end
 
   add_foreign_key "providers", "users"
   add_foreign_key "sessions", "users"
+  add_foreign_key "tasks", "users"
   add_foreign_key "tasks", "workstreams"
+  add_foreign_key "workstreams", "users"
   add_foreign_key "workstreams", "workstreams", column: "parent_id"
 end
