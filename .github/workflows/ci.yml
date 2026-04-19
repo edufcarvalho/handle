@@ -6,7 +6,6 @@ on:
     branches: [main]
 
 jobs:
-
   lint_js:
     runs-on: ubuntu-latest
     steps:
@@ -17,7 +16,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 22
-          cache: 'npm'
+          cache: "npm"
 
       - name: Install dependencies
         run: npm install
@@ -77,7 +76,14 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-
+    services:
+      postgres:
+        image: postgres:11-alpine
+        ports: ["5432:5432"]
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+        options: --health-cmd "pg_isready -U postgres" --health-interval 1s --health-timeout 5s --health-retries 5
     # services:
     #  redis:
     #    image: valkey/valkey:8
@@ -96,7 +102,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 22
-          cache: 'npm'
+          cache: "npm"
 
       - name: Install npm dependencies
         run: npm ci
@@ -112,7 +118,7 @@ jobs:
           RAILS_ENV: test
           # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           # REDIS_URL: redis://localhost:6379/0
-        run: bin/rails db:test:prepare spec
+        run: bin/rails db:test:prepare && bin/rails test
 
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v6
