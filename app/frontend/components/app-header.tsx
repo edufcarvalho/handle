@@ -49,12 +49,12 @@ const mainNavItems: NavItem[] = [
 const rightNavItems: NavItem[] = [
   {
     title: "Repository",
-    href: "https://github.com/inertia-rails/react-starter-kit",
+    href: "https://github.com/edufcarvalho/handle",
     icon: Folder,
   },
   {
     title: "Documentation",
-    href: "https://inertia-rails.dev",
+    href:  "https://github.com/edufcarvalho/handle#readme",
     icon: BookOpen,
   },
 ]
