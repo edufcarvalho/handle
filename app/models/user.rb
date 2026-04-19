@@ -11,12 +11,12 @@ class User < ApplicationRecord
     password_salt.last(10)
   end
 
-  has_many :sessions
-  has_many :tasks
-  has_many :providers
+  has_many :sessions, dependent: :destroy
+  has_many :tasks, dependent: :destroy
+  has_many :providers, dependent: :destroy
 
-  has_many :children, class_name: "Workstream", foreign_key: :parent_id
-  belongs_to :parent, class_name: "Workstream", foreign_key: :parent_id, optional: true, dependent: :destroy
+  has_many :children, class_name: "Workstream", foreign_key: :parent_id, dependent: :destroy
+  belongs_to :parent, class_name: "Workstream", foreign_key: :parent_id, optional: true
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }

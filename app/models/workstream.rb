@@ -3,8 +3,8 @@
 class Workstream < ApplicationRecord
   has_many :tasks
   has_many :children, class_name: "Workstream", foreign_key: :workstream_id
-  belongs_to :parent, class_name: "Workstream", foreign_key: :workstream_id, optional: true, dependent: :destroy
-  belongs_to :user, dependent: :destroy
+  belongs_to :parent, class_name: "Workstream", foreign_key: :workstream_id, optional: true
+  belongs_to :user
 
   validates :name, presence: true
 

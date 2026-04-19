@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Task < ApplicationRecord
-  belongs_to :workstream, optional: true, dependent: :destroy
-  belongs_to :user, dependent: :destroy
+  belongs_to :workstream, optional: true
+  belongs_to :user
 
   validates :title, presence: true
 
