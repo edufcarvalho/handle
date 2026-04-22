@@ -32,8 +32,7 @@ class User < ApplicationRecord
   def self.from_omniauth(auth)
     email = auth.info.email.presence&.downcase || "#{auth.uid}@#{auth.provider}.invalid"
 
-    user = User.includes(:providers)
-      .find_or_create_by(email:) do |u|
+    user = User.includes(:providers).find_or_create_by(email:) do |u|
         u.name ||= auth.info.name
         u.password ||= SecureRandom.hex(16)
         u.verified = true
